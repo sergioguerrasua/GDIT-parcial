@@ -7,3 +7,5 @@ crash.log
 terraform.tfvars
 *.auto.tfvars
 .env
+.env.*
+!.env.example

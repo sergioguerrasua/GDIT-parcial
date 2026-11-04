@@ -9,12 +9,14 @@
   },
   "scripts": {
     "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
     "lint": "eslint .",
     "test": "node --test"
   },
   "dependencies": {
     "express": "^4.21.2",
-    "pg": "^8.13.1"
+    "pg": "^8.13.1",
+    "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",

@@ -1,5 +1,7 @@
 const express = require('express');
 const os = require('os');
+const swaggerUi = require('swagger-ui-express');
+const spec = require('./openapi');
 
 // `db` se inyecta para poder probar la app sin una base de datos real.
 function createApp(db) {
@@ -13,6 +15,10 @@ function createApp(db) {
     res.set('X-Instance', instance);
     next();
   });
+
+  // Documentacion Swagger: UI en /docs y especificacion en /openapi.json
+  app.get('/openapi.json', (_req, res) => res.json(spec));
+  app.use('/docs', swaggerUi.serve, swaggerUi.setup(spec));
 
   // Health check del ALB: NO depende de la BD, para que una caida de la BD
   // no marque todas las instancias como unhealthy a la vez.

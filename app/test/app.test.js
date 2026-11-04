@@ -100,3 +100,18 @@ test('GET /api/load consume CPU y limita el parametro ms', async () => {
   const capped = await fetch(`${okUrl}/api/load?ms=99999`);
   assert.strictEqual((await capped.json()).burned_ms, 200);
 });
+
+test('GET /openapi.json documenta los endpoints', async () => {
+  const res = await fetch(`${okUrl}/openapi.json`);
+  assert.strictEqual(res.status, 200);
+  const spec = await res.json();
+  for (const p of ['/health', '/api/test', '/api/items', '/api/load']) {
+    assert.ok(spec.paths[p], `falta ${p}`);
+  }
+});
+
+test('GET /docs sirve la UI de Swagger', async () => {
+  const res = await fetch(`${okUrl}/docs/`);
+  assert.strictEqual(res.status, 200);
+  assert.match(await res.text(), /swagger/i);
+});
